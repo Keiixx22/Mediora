@@ -1,0 +1,266 @@
+@import 'tailwindcss';
+
+/* Design tokens. Colour sits on data, status and the one primary action; surfaces are flat and
+   separated by a 1px line or a tone step. Dark mode follows the system setting, or set
+   data-theme="light" / "dark" on <html> to force one. */
+:root {
+  color-scheme: light;
+  --bg: #f8f8f8;
+  --surface: #ffffff;
+  --surface2: #eeeeee;
+  --ink: #0a0a0a;
+  --muted: #5a5a5a;
+  --line: #dadada;
+  --accent: #1f6b3a;
+  --accent-ink: #ffffff;
+  --accent-soft: #c3edce;
+  --mint: #c3edce;
+  --pink: #f8c7c9;
+  --ticket: #0a0a0a;
+  --ticket-ink: #f8f8f8;
+  --ticket-dim: #9a9a9a;
+  --info-bg: #ddebfa;
+  --info-fg: #17467e;
+  --good-bg: #c3edce;
+  --good-fg: #14502b;
+  --warn-bg: #fcebc8;
+  --warn-fg: #7c4a00;
+  --bad-bg: #f8c7c9;
+  --bad-fg: #8f1d1d;
+  --neutral-bg: #e8e8e8;
+  --neutral-fg: #3d3d3d;
+  --accent-bg: #c3edce;
+  --accent-fg: #14502b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #0a0a0a;
+    --surface: #151515;
+    --surface2: #212121;
+    --ink: #f2f2f2;
+    --muted: #a6a6a6;
+    --line: #2e2e2e;
+    --accent: #7ad9a0;
+    --accent-ink: #04210f;
+    --accent-soft: #17331f;
+    --ticket: #f2f2f2;
+    --ticket-ink: #0a0a0a;
+    --ticket-dim: #6a6a6a;
+    --info-bg: #17324f;
+    --info-fg: #9cc7f5;
+    --good-bg: #153a24;
+    --good-fg: #8fddb0;
+    --warn-bg: #43310a;
+    --warn-fg: #f3c877;
+    --bad-bg: #4a1b1b;
+    --bad-fg: #f6a9a9;
+    --neutral-bg: #262626;
+    --neutral-fg: #bdbdbd;
+    --accent-bg: #153a24;
+    --accent-fg: #9be8bb;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0a0a0a;
+  --surface: #151515;
+  --surface2: #212121;
+  --ink: #f2f2f2;
+  --muted: #a6a6a6;
+  --line: #2e2e2e;
+  --accent: #7ad9a0;
+  --accent-ink: #04210f;
+  --accent-soft: #17331f;
+  --ticket: #f2f2f2;
+  --ticket-ink: #0a0a0a;
+  --ticket-dim: #6a6a6a;
+  --info-bg: #17324f;
+  --info-fg: #9cc7f5;
+  --good-bg: #153a24;
+  --good-fg: #8fddb0;
+  --warn-bg: #43310a;
+  --warn-fg: #f3c877;
+  --bad-bg: #4a1b1b;
+  --bad-fg: #f6a9a9;
+  --neutral-bg: #262626;
+  --neutral-fg: #bdbdbd;
+  --accent-bg: #153a24;
+  --accent-fg: #9be8bb;
+}
+
+/* Map the tokens to Tailwind utilities: bg-surface, text-muted, border-line, bg-info-bg ... */
+@theme inline {
+  --font-sans: 'Chillax', 'Figtree', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface2: var(--surface2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-ticket: var(--ticket);
+  --color-ticket-ink: var(--ticket-ink);
+  --color-ticket-dim: var(--ticket-dim);
+  --color-info-bg: var(--info-bg);
+  --color-info-fg: var(--info-fg);
+  --color-good-bg: var(--good-bg);
+  --color-good-fg: var(--good-fg);
+  --color-warn-bg: var(--warn-bg);
+  --color-warn-fg: var(--warn-fg);
+  --color-bad-bg: var(--bad-bg);
+  --color-bad-fg: var(--bad-fg);
+  --color-neutral-bg: var(--neutral-bg);
+  --color-neutral-fg: var(--neutral-fg);
+  --color-accent-bg: var(--accent-bg);
+  --color-accent-fg: var(--accent-fg);
+  --color-clay: #a0522d;
+  --color-stone: #8b8680;
+  --color-cream: #faf0e6;
+  --color-charcoal: #36454f;
+  --color-matcha: #6b7b3a;
+  --color-indigo: #3f51b5;
+  --color-gold: #d4af37;
+  --color-blush: #e8c4b8;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --color-mint: var(--mint);
+  --color-pink: var(--pink);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-bg font-sans text-base leading-normal text-ink antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    letter-spacing: -0.03em;
+  }
+  button,
+  [role='button'] {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  table {
+    font-variant-numeric: tabular-nums;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* The queue ticket: the one decorative object. Its notches take the colour of the surface behind it
+   through --notch (set it on the parent, e.g. [--notch:var(--color-surface)]). */
+@layer components {
+  .ticket {
+    position: relative;
+    min-width: 0;
+    border-radius: 20px;
+    background: var(--ticket);
+    color: var(--ticket-ink);
+    padding: 1rem 1.3rem 1.1rem;
+  }
+  .ticket::before,
+  .ticket::after {
+    content: '';
+    position: absolute;
+    top: 58%;
+    width: 20px;
+    height: 20px;
+    border-radius: 9999px;
+    background: var(--notch, var(--bg));
+  }
+  .ticket::before {
+    left: -10px;
+  }
+  .ticket::after {
+    right: -10px;
+  }
+  .ticket-no {
+    font-weight: 600;
+    font-size: clamp(2.6rem, 9vw, 4rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    padding: 0.5rem 0 0.9rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .ticket-sm .ticket-no {
+    font-size: 2.2rem;
+    padding: 0.25rem 0 0.5rem;
+  }
+  .ticket-foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    border-top: 2px dashed var(--ticket-dim);
+    padding-top: 0.7rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+}
+
+/* ---- Wabi-sabi landing scope: re-maps the app tokens so shared components pick up the ceramic palette ---- */
+.wabi {
+  --bg: #faf0e6;
+  --surface: #fffaf3;
+  --surface2: #f1e4d4;
+  --ink: #36454f;
+  --muted: #55606a;
+  --line: #cbbba8;
+  --accent: #a0522d;
+  --accent-ink: #faf0e6;
+  --accent-soft: #e8c4b8;
+  --accent-bg: #e8c4b8;
+  --accent-fg: #5c2a12;
+  --ticket: #36454f;
+  --ticket-ink: #faf0e6;
+  --ticket-dim: #cfc6ba;
+  color-scheme: light;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.15rem;
+  background: var(--bg);
+  color: var(--ink);
+}
+.wabi [class*='rounded-'] { border-radius: 0; }
+.wabi [class~='text-[13px]'], .wabi .text-sm { font-size: 1rem; }
+.wabi button, .wabi a, .wabi input, .wabi select { font-family: inherit; }
+.wabi h1, .wabi h2, .wabi h3 { letter-spacing: -0.01em; font-weight: 700; }
+.crackle {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='%238b8680' stroke-width='1' stroke-opacity='.22'%3E%3Cpath d='M0 70 L60 95 L120 60 L190 100 L250 70 L360 110'/%3E%3Cpath d='M60 95 L50 170 L110 200 L120 60'/%3E%3Cpath d='M190 100 L210 180 L280 210 L250 70'/%3E%3Cpath d='M50 170 L0 230 M110 200 L130 280 L60 340 M210 180 L170 270 L130 280 M280 210 L360 250 M170 270 L200 360 M280 210 L300 300 L360 330'/%3E%3C/g%3E%3C/svg%3E");
+}
+.wabi-edge {
+  border: 1.5px solid #8b8680;
+  border-radius: 2px 7px 3px 8px / 7px 3px 8px 2px !important;
+}
+.hand {
+  font-style: italic;
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+.gold-line {
+  height: 3px;
+  background: #d4af37;
+  clip-path: polygon(0 40%, 8% 0, 22% 70%, 38% 10%, 55% 80%, 72% 20%, 88% 90%, 100% 30%, 100% 70%, 85% 100%, 70% 50%, 52% 100%, 36% 40%, 20% 100%, 6% 60%, 0 80%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .wabi * { animation: none !important; transition-duration: 0.01ms !important; }
+}
